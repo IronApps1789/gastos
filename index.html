@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gastos</title>
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Gastos">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app" hidden>
+    <header class="top">
+      <div class="month">
+        <button class="iconbtn" id="prev" aria-label="Mes anterior">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <span id="mesLabel">—</span>
+        <button class="iconbtn" id="next" aria-label="Mes siguiente">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <button class="iconbtn" id="ajustes" aria-label="Ajustes">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
+    </header>
+
+    <section class="receipt" aria-live="polite">
+      <p class="eyebrow">Gastado este mes</p>
+      <p class="total" id="total">—</p>
+      <p class="sub" id="sub"></p>
+      <div class="bar" id="bar" aria-hidden="true"></div>
+      <ul class="legend" id="legend"></ul>
+    </section>
+
+    <section class="mov">
+      <h2>Movimientos</h2>
+      <ul id="lista" class="lista"></ul>
+    </section>
+  </main>
+
+  <nav class="actions" id="actions" hidden>
+    <label class="btn ghost square" aria-label="Elegir foto de la galería">
+      <input type="file" accept="image/*" id="galeria" hidden>
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+    </label>
+    <label class="btn primary">
+      <input type="file" accept="image/*" capture="environment" id="camara" hidden>
+      <svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+      <span>Ticket</span>
+    </label>
+    <button class="btn secondary" id="manual" type="button">
+      <svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>
+      <span>Sin ticket</span>
+    </button>
+  </nav>
+
+  <section id="setup" class="setup" hidden>
+    <div class="setup-card">
+      <img src="icon-192.png" alt="" width="64" height="64">
+      <h1>Conectar Gastos</h1>
+      <p>Pega la URL de la aplicación web de Apps Script y tu clave. Solo se hace una vez.</p>
+      <form id="setupForm">
+        <label>URL del script
+          <input name="url" type="url" required placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off">
+        </label>
+        <label>Clave
+          <input name="key" required autocomplete="off" autocapitalize="off" spellcheck="false">
+        </label>
+        <button class="btn primary wide" type="submit">Conectar</button>
+        <p class="error" id="setupError" role="alert"></p>
+      </form>
+    </div>
+  </section>
+
+  <div id="sheetWrap" class="sheet-wrap" hidden>
+    <div class="scrim" data-close></div>
+    <div class="sheet" role="dialog" aria-modal="true" id="sheet"></div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
